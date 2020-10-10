@@ -34,15 +34,17 @@
 #
                FC := ifort
 #              FC := mpiifort
-           FFLAGS := -fp-model precise
+#           FFLAGS := -fp-model precise
+           FFLAGS := -O3 -ip -xHost
 #          FFLAGS := -fc=ifort
-#          FFLAGS += -heap-arrays
+           FFLAGS += -heap-arrays
        FIXEDFLAGS := -nofree
         FREEFLAGS := -free
-              CPP := /usr/bin/cpp
+#              CPP := /usr/bin/cpp
+              CPP := icc -E
          CPPFLAGS := -P -traditional-cpp -w          # -w turns of warnings
-               CC := gcc
-              CXX := g++
+               CC := icc
+              CXX := icpc
            CFLAGS :=
          CXXFLAGS :=
            INCDIR := /usr/include /usr/local/bin

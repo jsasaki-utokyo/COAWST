@@ -20,7 +20,7 @@ IPLOT=1;            % 1 to make plots, 0 for no plots
 IWRITE=1;           % 1 to write output to netcdf, 0 for no output
 
 % (1) Specify existing Grid File and new tide Forcing Files 
-      Gname='C:\work\models\COAWST\Projects\Sandy2\Sandy_roms_grid.nc';
+      Gname='D:\cal\coawst\Projects\Sandy\Sandy_roms_grid.nc';
       Fname='tide_forc_Sandy.nc';
 
 % (2) Enter ROMS start time.  This will be used to calculate the proper phase
@@ -31,11 +31,11 @@ IWRITE=1;           % 1 to write output to netcdf, 0 for no output
       disp(['Tidal Start Time =' datestr(g)])
 
 % (3) Select Adcirc or topex/osu tidal constituent data 
-      adcirc=1
+      adcirc=0
       adcirc2012=0
-      osu=0
+      osu=1
       if (adcirc)
-        load c:\work\models\COAWST_data\tide\adcirc_ec2001v2e_fix.mat tri lon lat u v elev depth periods freq names
+        load D:\cal\coawst\Data\tide_data\adcirc_ec2001v2e_fix.mat tri lon lat u v elev depth periods freq names
         names=names';
       end
       if (adcirc2012)
@@ -66,8 +66,8 @@ IWRITE=1;           % 1 to write output to netcdf, 0 for no output
         names=names';
       end
       if (osu)
-        load ('COAWST_data\tide\tpx_uv.mat')
-        load ('COAWST_data\tide\tpx_h.mat')
+        load ('D:\cal\coawst\Data\tide_data\tpx_uv.mat')
+        load ('D:\cal\coawst\Data\tide_data\tpx_h.mat')
         names=con;
       end
 % (4) Specify which tidal constituents to use.  Look at "names" in the .mat file to
@@ -357,13 +357,15 @@ if (IPLOT),
 
     subplot(1,2,1)
     pcolor(rlon,rlat,squeeze(Tide.Eamp(:,:,k)));
-    shading('interp'); colorbar; dasp(43); grid on;
+%    shading('interp'); colorbar; dasp(43); grid on;
+    shading flat; colorbar; grid on;
     xlabel('Amplitude (m)');
     title(strcat(Tide.component(k,:),' Tidal Component'));
 
     subplot(1,2,2)
     pcolor(rlon,rlat,squeeze(Tide.Ephase(:,:,k)));
-    shading('interp'); colorbar; dasp(43); grid on;
+%    shading('interp'); colorbar; dasp(43); grid on;
+    shading flat; colorbar; grid on;
     xlabel('Phase Angle (degree)');
     title(strcat(Tide.component(k,:),' Tidal Component'));
   
@@ -375,23 +377,27 @@ if (IPLOT),
 
     subplot(2,2,1)
     pcolor(rlon,rlat,squeeze(Tide.Cmax(:,:,k)));
-    shading('interp'); colorbar; dasp(43); grid on;
+%    shading('interp'); colorbar; dasp(43); grid on;
+    shading flat; colorbar; grid on;
     xlabel('Major Axis amplitude (m/s)');
     title(strcat(Tide.component(k,:),' Tidal Component'));
 
     subplot(2,2,2)
     pcolor(rlon,rlat,squeeze(Tide.Cmin(:,:,k)));
-    shading('interp'); colorbar; dasp(43); grid on;
+%    shading('interp'); colorbar; dasp(43); grid on;
+    shading flat; colorbar; grid on;
     xlabel('Minor Axis amplitude (m/s)');
   
     subplot(2,2,3)
     pcolor(rlon,rlat,squeeze(Tide.Cangle(:,:,k)));
-    shading('interp'); colorbar; dasp(43); grid on;
+%    shading('interp'); colorbar; dasp(43); grid on;
+    shading flat; colorbar; grid on;
     xlabel('Inclination Angle (degrees)');
 
     subplot(2,2,4)
     pcolor(rlon,rlat,squeeze(Tide.Cphase(:,:,k)));
-    shading('interp'); colorbar; dasp(43); grid on;
+%    shading('interp'); colorbar; dasp(43); grid on;
+    shading flat; colorbar; grid on;
     xlabel('Phase Angle(degrees)');
 
  end,

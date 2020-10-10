@@ -1,4 +1,4 @@
-function [fn]=updatclim_coawst_mw(T1, gn, clm, clmname, wdr, url)
+function [fn]=updatclim_coawst_mw(T1, gn, clm, clmname, wdr, url, hycom_time_origin, hycom_time_interval)
 % Modified by Brandy Armstrong January 2012 to use only NCTOOLBOX 
 % and Matlab builtin functions to read and write netcdf files
 % jcw Feb 2019 - only use matalb BI
@@ -14,13 +14,47 @@ function [fn]=updatclim_coawst_mw(T1, gn, clm, clmname, wdr, url)
 %determine indices for time period of interpolation
 %
 disp('getting the number of time records ...');
+% jsasaki
+% tr0=datenum(0,1,1); % => 1 (day)
+% disp(tr0);
 t0=datenum(1900,12,31); % tr0=datenum(1858,11,17);
-time=ncread(url,'MT');
-tg=time+t0;
+disp(t0);
+% jsasaki
+%time=ncread(url,'MT');
+tttime = 1;
+while tttime == 1;
+    try
+        time=ncread(url,'time');
+        tttime = 0;
+    catch
+        disp(['catch time Unable to download HYCOM time data at' datestr(now)]);
+        fid=fopen('coawstlog.txt','a');
+        fprintf(fid,'Unable to download HYCOM time data at');
+        fprintf(fid,datestr(now));
+        fprintf(fid,'\n');
+    end
+end
+
+% Convert time from HYCOM to serial day
+% Serial day = 1 corresponds to 0000-01-01 00:00:00 (UTC)
+%disp(hycom_time_origin + hours(time(1)))
+time = datenum(hycom_time_origin + hours(time));
+%disp(time(1))
+%datetime(time(1), 'ConvertFrom', 'datenum')
+%datetime(time(2), 'ConvertFrom', 'datenum')
+
+% tg denotes serial days.
+% tg=1 corresponds to 0000-01-01 00:00:00 (UTC)
+%tg=time+t0;
+tg=time;
+% tg2 denotes Modified Julian Day.
+% tg2=0 corresponds to 1858-11-17 00:00:00 (UTC). 
 tg2=julian(str2num(datestr(tg,'yyyy')),str2num(datestr(tg,'mm')),str2num(datestr(tg,'dd')),str2num(datestr(tg,'HH')))-2400001;
 %
 % get user times
 %
+%disp(['T1 ' disp(T1)]);
+
 [junk,tid1,ib]=intersect(tg,floor(T1)); %modify to be nearest jcw 23Aug2014
 if isempty(tid1)
   tid1=length(tg);
@@ -48,7 +82,17 @@ ttu=1;
 clm.u=zeros([length(clm.z) size(gn.lon_rho)]);
 while ttu==1;
     try
-        tmpt=ncread(url,'u',[clm.ig0 clm.jg0 1 tid1],[clm.ig1-clm.ig0+1 clm.jg1-clm.jg0+1 tz_levs 1 ] );
+%        disp(clm.ig0);
+%        disp(clm.jg0);
+%        disp(tid1);
+%        disp(clm.ig1-clm.ig0+1);
+%        disp(clm.jg1-clm.jg0+1);
+%        disp(tz_levs);
+%        disp(time(1));
+%        disp(time(end))
+% Name of variable changed from u to water_u        
+%        tmpt=ncread(url,'u',[clm.ig0 clm.jg0 1 tid1],[clm.ig1-clm.ig0+1 clm.jg1-clm.jg0+1 tz_levs 1 ] );
+        tmpt=ncread(url,'water_u',[clm.ig0 clm.jg0 1 tid1],[clm.ig1-clm.ig0+1 clm.jg1-clm.jg0+1 tz_levs 1 ] );
         for k=1:tz_levs
             disp(['doing griddata u for HYCOM level ' num2str(k)]);
             tmp=double(squeeze(tmpt(:,:,k)));
@@ -76,7 +120,9 @@ ttv=1;
 clm.v=zeros([length(clm.z) size(gn.lon_rho)]);
 while ttv==1;
     try
-        tmpt=ncread(url,'v',[clm.ig0 clm.jg0 1 tid1],[clm.ig1-clm.ig0+1 clm.jg1-clm.jg0+1 tz_levs 1 ] );
+% v changed to water_v
+%        tmpt=ncread(url,'v',[clm.ig0 clm.jg0 1 tid1],[clm.ig1-clm.ig0+1 clm.jg1-clm.jg0+1 tz_levs 1 ] );
+        tmpt=ncread(url,'water_v',[clm.ig0 clm.jg0 1 tid1],[clm.ig1-clm.ig0+1 clm.jg1-clm.jg0+1 tz_levs 1 ] );
         for k=1:tz_levs
             disp(['doing griddata v for HYCOM level ' num2str(k)]);
             tmp=double(squeeze(tmpt(:,:,k)));
@@ -157,7 +203,9 @@ disp(['Interpolating zeta for ',datestr(tg(tid1))]);
 ttz=1;
 while ttz==1;
     try
-        tmpt=ncread(url,'ssh',[clm.ig0 clm.jg0 tid1],[clm.ig1-clm.ig0+1 clm.jg1-clm.jg0+1 1 ] );
+% ssh changed to surf_el
+%        tmpt=ncread(url,'ssh',[clm.ig0 clm.jg0 tid1],[clm.ig1-clm.ig0+1 clm.jg1-clm.jg0+1 1 ] );
+        tmpt=ncread(url,'surf_el',[clm.ig0 clm.jg0 tid1],[clm.ig1-clm.ig0+1 clm.jg1-clm.jg0+1 1 ] );
         tmp=double(squeeze(tmpt(:,:)));
         disp(['doing griddata zeta for HYCOM ']);
         F = scatteredInterpolant(X(:),Y(:),tmp(:));
@@ -165,9 +213,9 @@ while ttz==1;
         zeta=maplev(cff);
         ttz=0;
     catch
-        disp(['catch z Unable to download HYCOM ssh data at' datestr(now)]);
+        disp(['catch surf_el Unable to download HYCOM surf_el data at' datestr(now)]);
         fid=fopen('coawstlog.txt','a');
-        fprintf(fid,'Unable to download HYCOM ssh data at');
+        fprintf(fid,'Unable to download HYCOM surf_el data at');
         fprintf(fid,datestr(now));
         fprintf(fid,'\n');
     end
@@ -187,7 +235,9 @@ ttt=1;
 clm.temp=zeros([length(clm.z) size(gn.lon_rho)]);
 while ttt==1;
     try
-        tmpt=ncread(url,'temperature',[clm.ig0 clm.jg0 1 tid1],[clm.ig1-clm.ig0+1 clm.jg1-clm.jg0+1 tz_levs 1 ] );
+% temperature changed to water_temp
+%        tmpt=ncread(url,'temperature',[clm.ig0 clm.jg0 1 tid1],[clm.ig1-clm.ig0+1 clm.jg1-clm.jg0+1 tz_levs 1 ] );
+        tmpt=ncread(url,'water_temp',[clm.ig0 clm.jg0 1 tid1],[clm.ig1-clm.ig0+1 clm.jg1-clm.jg0+1 tz_levs 1 ] );
         for k=1:tz_levs
             disp(['doing griddata temp for HYCOM level ' num2str(k)]);
             tmp=double(squeeze(tmpt(:,:,k)));
@@ -198,9 +248,9 @@ while ttt==1;
         end
         ttt=0;
     catch
-        disp(['catch temp Unable to download HYCOM temp data at' datestr(now)]);
+        disp(['catch temp Unable to download HYCOM water_temp data at' datestr(now)]);
         fid=fopen('coawstlog.txt','a');
-        fprintf(fid,'Unable to download HYCOM temp data at');
+        fprintf(fid,'Unable to download HYCOM water_temp data at');
         fprintf(fid,datestr(now));
         fprintf(fid,'\n');
     end
@@ -237,10 +287,14 @@ while tts==1;
         end
         tts=0;
     catch
-        disp(['catch temp Unable to download HYCOM temp data at' datestr(now)]);
+        disp(['catch salt Unable to download HYCOM salinity data at' datestr(now)]);
         fid=fopen('coawstlog.txt','a');
-        fprintf(fid,'Unable to download HYCOM temp data at');
-        fprintf(fid,datestr(now));
+        fprintf(fid,'Unable to download HYCOM salinity data at');
+        fprintf(fid,datestr(now),'\n');
+        %fprintf(fid,'clm.ig0',clm.ig0,'clm.jg0',clm.jg0,'tid1',tid1,'\n');
+        %fprintf(fid, 'clm.ig1-clm.ig0+1',clm.ig1-clm.ig0+1,'\n');
+        %fprintf(fid, 'clm.jg1-clm.jg0+1',clm.jg1-clm.jg0+1,'\n');
+        %fprintf(fid, 'tz_levs',tz_levs);
         fprintf(fid,'\n');
     end
 end
