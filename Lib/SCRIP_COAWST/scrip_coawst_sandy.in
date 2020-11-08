@@ -14,7 +14,7 @@ OUTPUT_NCFILE='scrip_sandy_static.nc'
 ! 2) Enter total number of ROMS, SWAN, WW3, and WRF grids:
 !
 NGRIDS_ROMS=2,
-NGRIDS_SWAN=2,
+NGRIDS_SWAN=0,
 NGRIDS_WW3=0,
 NGRIDS_WRF=2,
 NGRIDS_HYD=0,

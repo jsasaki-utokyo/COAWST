@@ -5,6 +5,8 @@ Build/
 *.log
 *.a
 *.exe
+/coawstM
+/coawstS
 WPS/*.nc
 WPS/NAM:*
 WPS/SST:*
@@ -18,4 +20,5 @@ WRF/test/em_real/*.asc
 WRF/test/em_real/*.nc
 WRF/test/em_real/CAMtr*
 Lib/SCRIP_COAWST/*.fpp
+/doc/
 
