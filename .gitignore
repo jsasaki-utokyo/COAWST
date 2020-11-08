@@ -1,0 +1,17 @@
+*.o
+*.mod
+*.exe
+*.f90
+*.nc
+WRF/inc/*.inc
+Build/
+WRF/test/em_real/wrfinput_*
+WRF/test/em_real/wrflowinp_*
+WRF/test/em_real/wrfout_*
+WRF/test/em_real/wrfbdy_*
+*.sh.o*
+WPS/GRIBFILE.*
+WPS/*:????-??-??*
+WRF/external/*/*.f
+WRF/external/*/*.f90
+WRF/test/em_real_*/

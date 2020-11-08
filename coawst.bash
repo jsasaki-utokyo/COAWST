@@ -121,7 +121,8 @@ done
 # Set the CPP option defining the particular application. This will
 # determine the name of the ".h" header file with the application
 # CPP definitions. Also this will activate the switch file for WW3.
-export   COAWST_APPLICATION=INLET_TEST
+# jsasaki
+export   COAWST_APPLICATION=SANDY
 
 # Set the ROMS_APPLICATION to be the same as the COAWST_APP.
 # Do not change this. We use the COAWST APP for other checks.
@@ -129,7 +130,8 @@ export   ROMS_APPLICATION=${COAWST_APPLICATION}
 
 # Set a local environmental variable to define the path to the directories
 # where all this project's files are kept.
-export   MY_ROOT_DIR=/cygdrive/e/data/models/COAWST
+# jsasaki
+export   MY_ROOT_DIR=${HOME}/coawst
 export   MY_PROJECT_DIR=${MY_ROOT_DIR}
 
 # The path to the user's local current ROMS source code.
@@ -200,11 +202,12 @@ export   NETCDF_CONFIG=/usr/bin/nc-config
 # out. Any string value (including off) will evaluate to TRUE in
 # conditional if-statements.
 
+# jsasaki
  export           USE_MPI=on            # distributed-memory parallelism
  export        USE_MPIF90=on            # compile with mpif90 script
 #export         which_MPI=mpich         # compile with MPICH library
 #export         which_MPI=mpich2        # compile with MPICH2 library
- export         which_MPI=openmpi       # compile with OpenMPI library
+#export         which_MPI=openmpi       # compile with OpenMPI library
 
 #export        USE_OpenMP=on            # shared-memory parallelism
 
@@ -451,10 +454,11 @@ fi
 # customized biology model header file (like fennel.h, nemuro.h, ecosim.h,
 # etc).
 
+# jsasaki
 #  export     MY_HEADER_DIR=${MY_PROJECT_DIR}/ROMS/Include
 #  export MY_ANALYTICAL_DIR=${MY_PROJECT_DIR}/ROMS/Functionals
-   export     MY_HEADER_DIR=${MY_PROJECT_DIR}/Projects/Inlet_test/Coupled
-   export MY_ANALYTICAL_DIR=${MY_PROJECT_DIR}/Projects/Inlet_test/Coupled
+   export     MY_HEADER_DIR=${MY_PROJECT_DIR}/Projects/Sandy
+   export MY_ANALYTICAL_DIR=${MY_PROJECT_DIR}/Projects/Sandy
 
 # Put the binary to execute in the following directory.
 
@@ -488,9 +492,10 @@ fi
 # Compile (the binary will go to BINDIR set above).
 
 # first go to make some coupler files
-if [ $clean -eq 1 ] && [ $cleanwrf -eq 1 ] && [ $cleanwrfhydro -eq 1 ] && [ $cleanww3 -eq 1 ] ; then
+# jsasaki  Comment out 'if' and 'fi'
+#if [ $clean -eq 1 ] && [ $cleanwrf -eq 1 ] && [ $cleanwrfhydro -eq 1 ] && [ $cleanww3 -eq 1 ] ; then
   make mct_params
-fi
+#fi
   cd ${SCRATCH_DIR}
   export MCT_PARAMS_DIR=${PWD}
   cd ${MY_ROMS_SRC}

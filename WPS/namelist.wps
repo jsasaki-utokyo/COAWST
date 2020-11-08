@@ -36,7 +36,7 @@
  truelat1  =  30.0,
  truelat2  =  60.0,
  stand_lon = -75.0,
- geog_data_path = '/stor400b/jbzambon/jcw/sandy/static_nest/wps/geog'
+ geog_data_path = '/mnt/c/DATA/wps/geog'
 /
 
 &ungrib
@@ -45,6 +45,6 @@
 /
 
 &metgrid
- fg_name = 'NAM', 'RTG',
+ fg_name = 'NAM', 'SST',
  io_form_metgrid = 2, 
 /

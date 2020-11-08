@@ -11,15 +11,15 @@
 ** Application flag:   SANDY
 */
 
-#define ROMS_MODEL
-#define NESTING
+#undef ROMS_MODEL
+#undef NESTING
 #define WRF_MODEL
-#define SWAN_MODEL
+#undef SWAN_MODEL
 #undef  WW3_MODEL
-#define MCT_LIB
-#define MCT_INTERP_OC2AT
-#define MCT_INTERP_WV2AT
-#define MCT_INTERP_OC2WV
+#undef MCT_LIB
+#undef MCT_INTERP_OC2AT
+#undef MCT_INTERP_WV2AT
+#undef MCT_INTERP_OC2WV
 
 #if defined WRF_MODEL && (defined SWAN_MODEL || defined WW3_MODEL)
 # define DRAGLIM_DAVIS

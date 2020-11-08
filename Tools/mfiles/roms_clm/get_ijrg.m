@@ -35,11 +35,59 @@ gn.z_w=shiftdim(gn.z_w,2);
 % Read HYCOM lon lat depth
 %
 display(['getting HYCOM grid data from ', url])
-numX=ncread(url,'X');
-numY=ncread(url,'Y');
-hycom_lon=ncread(url,'Longitude',[1 1],[length(numX) 1]);
-hycom_lat=ncread(url,'Latitude',[1 1],[1 length(numY)]);
-hycom_depth=ncread(url,'Depth');
+ncdisp(url);
+% jsasaki
+%numX=ncread(url,'X');
+%numY=ncread(url,'Y');
+%ncread(url, 'time')
+%ncread(url,'depth')
+%ncread(url,'lat')
+
+%hycom_lon=ncread(url,'Longitude',[1 1],[length(numX) 1]);
+%hycom_lat=ncread(url,'Latitude',[1 1],[1 length(numY)]);
+%hycom_depth=ncread(url,'Depth');
+
+ttlon = 1;
+while ttlon == 1;
+    try
+        hycom_lon=ncread(url,'lon');
+        ttlon = 0;
+    catch
+        disp(['catch lon Unable to download HYCOM lon data at' datestr(now)]);
+        fid=fopen('coawstlog.txt','a');
+        fprintf(fid,'Unable to download HYCOM lon data at');
+        fprintf(fid,datestr(now));
+        fprintf(fid,'\n');
+    end
+end
+
+ttlat = 1;
+while ttlat == 1;
+    try
+        hycom_lat=ncread(url,'lat');
+        ttlat = 0;
+    catch
+        disp(['catch lat Unable to download HYCOM lat data at' datestr(now)]);
+        fid=fopen('coawstlog.txt','a');
+        fprintf(fid,'Unable to download HYCOM lat data at');
+        fprintf(fid,datestr(now));
+        fprintf(fid,'\n');
+    end
+end
+
+ttdepth = 1;
+while ttdepth == 1;
+    try
+        hycom_depth=ncread(url,'depth');
+        ttdepth = 0;
+    catch
+        disp(['catch depth Unable to download HYCOM depth data at' datestr(now)]);
+        fid=fopen('coawstlog.txt','a');
+        fprintf(fid,'Unable to download HYCOM depth data at');
+        fprintf(fid,datestr(now));
+        fprintf(fid,'\n');
+    end
+end
 %
 % Get roms grid limits
 %
@@ -88,4 +136,3 @@ clm.ig0=ig0;
 clm.ig1=ig1;
 clm.jg0=jg0;
 clm.jg1=jg1;
-

@@ -9,7 +9,7 @@ function ww3partition_2TPAR(partfile,specpts,yearww3,mmww3)
 %  Kumar, N., D.L. Cahl, S.C. Crosby, and G. Voulgaris, 2017: 
 %   Bulk versus Spectral Wave Parameters: Implications on Stokes Drift Estimates,
 %   Regional Wave Modeling, and HF Radars Applications. J. Phys. Oceanogr., 47, 
-%   1413–1431, https://doi.org/10.1175/JPO-D-16-0203.1 
+%   1413431, https://doi.org/10.1175/JPO-D-16-0203.1 
 
 %
 % First get all the grid points.
