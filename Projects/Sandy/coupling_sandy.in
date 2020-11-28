@@ -37,21 +37,21 @@
 ! Number of parallel nodes assigned to each model in the coupled system.
 ! Their sum must be equal to the total number of processors.
 
-   NnodesATM =  1                   ! atmospheric model
-   NnodesWAV =  1                   ! wave model
-   NnodesOCN =  1                   ! ocean model
+   NnodesATM =  18                  ! atmospheric model
+   NnodesWAV =  0                   ! wave model
+   NnodesOCN =  18                  ! ocean model
    NnodesHYD =  0                   ! hydrology model
 
 ! Time interval (seconds) between coupling of models.
 
-  TI_ATM2WAV =   1800.0d0              ! atmosphere to wave coupling interval
+  TI_ATM2WAV =      0.0d0              ! atmosphere to wave coupling interval
   TI_ATM2OCN =   1800.0d0              ! atmosphere to ocean coupling interval
-  TI_WAV2ATM =   1800.0d0              ! wave to atmosphere coupling interval
-  TI_WAV2OCN =   1800.0d0              ! wave to ocean coupling interval
-  TI_OCN2WAV =   1800.0d0              ! ocean to wave coupling interval
+  TI_WAV2ATM =      0.0d0              ! wave to atmosphere coupling interval
+  TI_WAV2OCN =      0.0d0              ! wave to ocean coupling interval
+  TI_OCN2WAV =      0.0d0              ! ocean to wave coupling interval
   TI_OCN2ATM =   1800.0d0              ! ocean to atmosphere coupling interval
-  TI_OCN2HYD =     0.0d0              ! ocean to hydro coupling interval
-  TI_HYD2OCN =     0.0d0              ! hydro to ocean coupling interval
+  TI_OCN2HYD =      0.0d0              ! ocean to hydro coupling interval
+  TI_HYD2OCN =      0.0d0              ! hydro to ocean coupling interval
 
 ! Enter names of Atm, Wav, and Ocn input files.
 ! The Wav program needs multiple input files, one for each grid.

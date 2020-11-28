@@ -147,6 +147,9 @@ export   MY_ROMS_SRC=${MY_ROOT_DIR}/
 ############################################################################
 # WRF : Needs to have the env variable NETCDF set.
 #export  NETCDF=${NETCDF_INCDIR}/../
+# jsasaki
+# This env variable is also set in .bashrc.
+export NETCDF="${HOME}/local/netcdf4-intel-wrf"
 #
 ############################################################################
 # Wave Watch 3: Here we provide 5 environment variables for WW3.
@@ -178,7 +181,7 @@ export   NETCDF_CONFIG=/usr/bin/nc-config
 # ${MY_ROMS_SRC}/Compilers. If this is the case, the you need to keep
 # these configurations files up-to-date.
 
-#export         COMPILERS=${MY_ROMS_SRC}/Compilers
+export         COMPILERS=${MY_ROMS_SRC}/Compilers
 
 # Set tunable CPP options.
 #
