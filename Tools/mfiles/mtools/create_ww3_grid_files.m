@@ -114,5 +114,3 @@ for index1 = 1:MP;
     fprintf(fid,'\n');
 end
 fclose(fid);
-
-

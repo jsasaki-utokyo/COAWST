@@ -121,7 +121,7 @@ done
 # Set the CPP option defining the particular application. This will
 # determine the name of the ".h" header file with the application
 # CPP definitions. Also this will activate the switch file for WW3.
-export   COAWST_APPLICATION=INLET_TEST
+export   COAWST_APPLICATION=SANDY
 
 # Set the ROMS_APPLICATION to be the same as the COAWST_APP.
 # Do not change this. We use the COAWST APP for other checks.
@@ -129,7 +129,7 @@ export   ROMS_APPLICATION=${COAWST_APPLICATION}
 
 # Set a local environmental variable to define the path to the directories
 # where all this project's files are kept.
-export   MY_ROOT_DIR=/cygdrive/e/data/models/COAWST
+export   MY_ROOT_DIR=/mnt/d/cal/coawst
 export   MY_PROJECT_DIR=${MY_ROOT_DIR}
 
 # The path to the user's local current ROMS source code.
@@ -145,6 +145,7 @@ export   MY_ROMS_SRC=${MY_ROOT_DIR}/
 ############################################################################
 # WRF : Needs to have the env variable NETCDF set.
 #export  NETCDF=${NETCDF_INCDIR}/../
+export NETCDF="${HOME}/local/netcdf4-intel-wrf"
 #
 ############################################################################
 # Wave Watch 3: Here we provide 5 environment variables for WW3.
@@ -177,7 +178,7 @@ export   NETCDF_CONFIG=/usr/bin/nf-config
 # ${MY_ROMS_SRC}/Compilers. If this is the case, the you need to keep
 # these configurations files up-to-date.
 
-#export         COMPILERS=${MY_ROMS_SRC}/Compilers
+export         COMPILERS=${MY_ROMS_SRC}/Compilers
 
 # Set tunable CPP options.
 #
@@ -201,6 +202,7 @@ export   NETCDF_CONFIG=/usr/bin/nf-config
 # out. Any string value (including off) will evaluate to TRUE in
 # conditional if-statements.
 
+# export           USE_MPI=              # distributed-memory parallelism
  export           USE_MPI=on            # distributed-memory parallelism
  export        USE_MPIF90=on            # compile with mpif90 script
 #export         which_MPI=mpich         # compile with MPICH library
@@ -454,8 +456,8 @@ fi
 
 #  export     MY_HEADER_DIR=${MY_PROJECT_DIR}/ROMS/Include
 #  export MY_ANALYTICAL_DIR=${MY_PROJECT_DIR}/ROMS/Functionals
-   export     MY_HEADER_DIR=${MY_PROJECT_DIR}/Projects/Inlet_test/Coupled
-   export MY_ANALYTICAL_DIR=${MY_PROJECT_DIR}/Projects/Inlet_test/Coupled
+   export     MY_HEADER_DIR=${MY_PROJECT_DIR}/Projects/Sandy
+   export MY_ANALYTICAL_DIR=${MY_PROJECT_DIR}/Projects/Sandy
 
 # Put the binary to execute in the following directory.
 

@@ -721,6 +721,13 @@ if (spherical)
   if (~isempty(G(dg).x_rho) && ~isempty(G(dg).y_rho))
     FCr = griddedInterpolant(XrC, YrC, G(dg).x_rho, method);
 
+<<<<<<< HEAD
+% corrected by jsasaki: (:) removed.
+%    FCr.Values = G(dg).angle(:);    R.angle = FCr(XrF, YrF); 
+%    FCr.Values = G(dg).f(:);        R.f     = FCr(XrF, YrF); 
+%    FCr.Values = G(dg).h(:);        R.h     = FCr(XrF, YrF); 
+=======
+>>>>>>> main
     FCr.Values = G(dg).angle;    R.angle = FCr(XrF, YrF); 
     FCr.Values = G(dg).f;        R.f     = FCr(XrF, YrF); 
     FCr.Values = G(dg).h;        R.h     = FCr(XrF, YrF); 
@@ -728,6 +735,12 @@ if (spherical)
   elseif (~isempty(G(dg).lon_rho) && ~isempty(G(dg).lat_rho))
     FSr = griddedInterpolant(XrC, YrC, G(dg).lon_rho, method);
 
+<<<<<<< HEAD
+%    FSr.Values = G(dg).angle(:);    R.angle = FSr(XrF, YrF); 
+%    FSr.Values = G(dg).f(:);        R.f     = FSr(XrF, YrF); 
+%    FSr.Values = G(dg).h(:);        R.h     = FSr(XrF, YrF); 
+=======
+>>>>>>> main
     FSr.Values = G(dg).angle;    R.angle = FSr(XrF, YrF); 
     FSr.Values = G(dg).f;        R.f     = FSr(XrF, YrF); 
     FSr.Values = G(dg).h;        R.h     = FSr(XrF, YrF); 
